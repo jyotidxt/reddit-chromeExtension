@@ -2,17 +2,18 @@ import { defineConfig } from 'wxt';
 import tailwindcss from '@tailwindcss/vite';
 // See https://wxt.dev/api/config.html
 export default defineConfig({
+// extensionApi: "chrome",
   modules: ['@wxt-dev/module-react'],
    vite: () => ({
     plugins: [tailwindcss()], // <-- Tailwind plugin yahan add hoga
   }),
   manifest:({ browser, manifestVersion, mode, command}) =>{
     return{
-      manifest_version:2,
-      name:"WXT Example",
-      description:"WXT",
+      manifest_version:3,
+      name:"Reddit AI Assistant",
+      description:"AI-powered Reddit workflow assistant",
       version:"1.0.0",
-      permisiion:["storage", "tabs"],
+      permisiions:["storage", "tabs"],
     }
   }
 });

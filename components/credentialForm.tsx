@@ -1,5 +1,5 @@
 import { IFormData, useFormData } from "@/entrypoints/hooks/formData";
-
+import toast from "react-hot-toast"
 export default function CredentialForm() {
 
   const {formData, setFormData} = useFormData();
@@ -7,10 +7,16 @@ export default function CredentialForm() {
     const {name , value} = e.target;
     setFormData((prev: IFormData)=>({...prev, [name]:value}));
   };
-  console.log(formData)  ;
-  
+  console.log(formData);
+
+  const handleSubmit =(e: React.FormEvent)=>{
+chrome.storage.local.set({formData},()=>{
+  toast.success("API credentials saved successfully")
+})
+  }
+   
   return (
-    <div className="flex flex-col items-center justify-center w-600 min-h-screen bg-orange-500 p-6">
+    <div className="flex flex-col  items-center justify-center w-100 min-h-screen bg-orange-700 p-6">
       {/* Main Card */}
       <div className="w-full max-w-md bg-white p-8 rounded-3xl shadow-xl border border-orange-100 mb-6">
         
@@ -29,7 +35,7 @@ export default function CredentialForm() {
             <input
               type="url"
               id="endpoint"
-              name="'endpoint"
+              name="endpoint"
               required
               className="w-full px-4 py-3 rounded-xl border border-orange-200 focus:ring-4 focus:ring-orange-100 outline-none transition-all bg-orange-50/50 text-orange-900 placeholder:text-orange-300"
               value={formData?.endpoint}
@@ -57,6 +63,7 @@ export default function CredentialForm() {
           <button
             type="submit"
             className="w-full py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl shadow-lg hover:shadow-orange-200 transition-all duration-300 active:scale-[0.98]"
+            onSubmit={handleSubmit}
           >
            Save
           </button>

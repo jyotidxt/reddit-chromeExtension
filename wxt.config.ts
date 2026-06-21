@@ -5,7 +5,7 @@ export default defineConfig({
 // extensionApi: "chrome",
   modules: ['@wxt-dev/module-react'],
    vite: () => ({
-    plugins: [tailwindcss()], // <-- Tailwind plugin yahan add hoga
+    plugins: [tailwindcss()], 
   }),
   manifest:({ browser, manifestVersion, mode, command}) =>{
     return{
@@ -13,7 +13,8 @@ export default defineConfig({
       name:"Reddit AI Assistant",
       description:"AI-powered Reddit workflow assistant",
       version:"1.0.0",
-      permisiions:["storage", "tabs"],
+      permisiions:["storage"],
     }
+
   }
 });

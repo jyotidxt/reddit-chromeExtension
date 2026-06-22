@@ -1,5 +1,6 @@
+
 export default defineContentScript({
-  matches: ['*://*./*'],
+  matches: ['*://*.reddit.com/*'], 
   main() {
     console.log('Hello content.');
   },

@@ -1,4 +1,4 @@
-import { IFormData, useFormData } from "@/entrypoints/hooks/formData";
+import { IFormData, useFormData } from "@/entrypoints/hooks/useFormData";
 import toast from "react-hot-toast"
 export default function CredentialForm() {
 
@@ -9,11 +9,24 @@ export default function CredentialForm() {
   };
   console.log(formData);
 
-  const handleSubmit =(e: React.FormEvent)=>{
-chrome.storage.local.set({formData},()=>{
-  toast.success("API credentials saved successfully")
-})
+  const handleSubmit = (e: React.FormEvent) => {
+  e.preventDefault(); 
+  
+  // यहाँ चेक करें: क्या यहाँ आपका डेटा दिख रहा है?
+  console.log("Submit clicked. Current formData:", formData);
+
+  if (!formData.endpoint || !formData.apiKey) {
+    console.error("Error: Endpoint or API Key is empty!");
+    return;
   }
+
+  chrome.storage.local.set({ formData }, () => {
+    console.log("Data saved successfully to Chrome Storage!");
+    alert("Data Saved Successfully!");
+  });
+};
+
+ 
    
   return (
     <div className="flex flex-col  items-center justify-center w-100 min-h-screen bg-orange-700 p-6">
@@ -61,7 +74,7 @@ chrome.storage.local.set({formData},()=>{
           </div>
 
           <button
-            type="submit"
+            type="button"
             className="w-full py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl shadow-lg hover:shadow-orange-200 transition-all duration-300 active:scale-[0.98]"
             onSubmit={handleSubmit}
           >

@@ -21,7 +21,9 @@ export default defineBackground(() => {
     // handling when the submenu clicked what will happen
     
     chrome.contextMenus.onClicked.addListener(async (info, tab) =>{
+      
       if (info.menuItemId=== "post"){
+          // to send message to any tab
         chrome.tabs.sendMessage(
           tab?.id!,
           {action:"post"},
@@ -32,6 +34,7 @@ export default defineBackground(() => {
       }
 
         if (info.menuItemId=== "comment"){
+          // to send message to any tab
         chrome.tabs.sendMessage(
           tab?.id!,
           {action:"comment"},

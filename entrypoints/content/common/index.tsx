@@ -13,7 +13,7 @@ export const CreateContentElement = (uiContainer: HTMLElement,
     <React.StrictMode>
       <div style={{
         position: "fixed", top: 50, right: 10,
-        backgroundColor: "rgba(240, 15, 15, 0.8)", 
+        backgroundColor: "rgba(73, 73, 73, 0.8)", 
         padding: "10px", color: 'white', zIndex: 9999
       }}>
         <Toaster/>

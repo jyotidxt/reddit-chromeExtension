@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { CreateContentElement } from "./content/common";
+import PostModal from './content/posts';
 
 export default defineContentScript({
   matches: ['*://*.reddit.com/*'],
@@ -16,8 +17,15 @@ export default defineContentScript({
         anchor: "body",
         onMount: (uiContainer, shadow, shadowContainer) => {
           //  CreateContentElement ui rendering
+           const onRemove = () => {
+              root?.unmount();
+              shadowContainer.style.visibility="hidden";
+            };
           root = CreateContentElement(uiContainer, shadowContainer, message, (root) => (
-            <h1>Hello World!! {message}</h1>
+
+           
+            
+            <PostModal posts={[]}  onRemove={onRemove}/>
           ));
         },
         onRemove: () => {

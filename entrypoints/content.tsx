@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { CreateContentElement } from "./content/common";
 import PostModal from './content/posts';
+import CommentModal from './content/comment';
 // import background from './background';
 
 export default defineContentScript({
@@ -40,9 +41,12 @@ export default defineContentScript({
           };
           root = CreateContentElement(uiContainer, shadowContainer, message, (root) => (
 
-
-
-            <PostModal posts={[]} onRemove={onRemove} />
+message === "comment" 
+    ?  <CommentModal comments={[]} onRemove={onRemove} />
+    : <PostModal posts={[]} onRemove={onRemove} />
+/* <><PostModal posts={[]} onRemove={onRemove} />
+               <CommentModal comments={[]} onRemove={onRemove} /></> */
+            
           ));
         },
         onRemove: () => {

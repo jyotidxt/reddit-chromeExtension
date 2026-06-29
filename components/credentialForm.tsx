@@ -1,5 +1,6 @@
 import { IFormData, useFormData } from "@/entrypoints/hooks/useFormData";
 import toast from "react-hot-toast"
+// import 'react-hot-toast/dist/index.css'
 export default function CredentialForm() {
 
   const {formData, setFormData} = useFormData();
@@ -11,8 +12,28 @@ export default function CredentialForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
   e.preventDefault(); 
+  const handleSubmit = (e: React.FormEvent) => {
+  e.preventDefault(); 
   
-  // यहाँ चेक करें: क्या यहाँ आपका डेटा दिख रहा है?
+  // if (!formData?.endpoint || !formData?.apiKey) {
+  //   toast.error("Endpoint/API Key missing!");
+  //   return;
+  // }
+
+  // chrome.storage.local.set({ formData }, () => {
+  //   // Ye raha aapka chhota, green toast
+  //   toast.success("Saved successfully!", {
+  //     duration: 3000,
+  //     position: 'top-center',
+  //     style: {
+  //       background: '#065f46', // Green background
+  //       color: '#fff',
+  //       fontSize: '14px',
+  //       borderRadius: '10px',
+  //     },
+  //   });
+  // });
+};
   console.log("Submit clicked. Current formData:", formData);
 
   if (!formData.endpoint || !formData.apiKey) {
@@ -76,7 +97,7 @@ export default function CredentialForm() {
           <button
             type="button"
             className="w-full py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl shadow-lg hover:shadow-orange-200 transition-all duration-300 active:scale-[0.98]"
-            onSubmit={handleSubmit}
+            onClick={handleSubmit}
           >
            Save
           </button>

@@ -75,7 +75,7 @@ import { CreateContentElement } from "./content/common";
 import PostModal from './content/posts';
 import CommentModal from './content/comment';
 import { useFormData } from "@/entrypoints/hooks/useFormData";
-
+import './popup/style.css'
 export default defineContentScript({
   matches: ['*://*.reddit.com/*'],
   cssInjectionMode: "ui",

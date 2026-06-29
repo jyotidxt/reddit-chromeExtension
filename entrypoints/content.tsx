@@ -2,30 +2,47 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { CreateContentElement } from "./content/common";
 import PostModal from './content/posts';
+// import background from './background';
 
 export default defineContentScript({
   matches: ['*://*.reddit.com/*'],
   cssInjectionMode: "ui",
   async main(ctx) {
- 
+
     const createUi = (message: string) => {
-      let root: ReactDOM.Root | null = null; 
+      let root: ReactDOM.Root | null = null;
 
       return createShadowRootUi(ctx, {
         name: `ui-${message}`,
         position: "inline",
         anchor: "body",
         onMount: (uiContainer, shadow, shadowContainer) => {
+          Object.assign(shadowContainer.style, {
+            position: "fixed",
+            top: "0",
+            right: "0",
+            bottom: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: "999999",
+            // backgroundColor: "transparent",
+            // transform: "translate(-50%, -50%)",
+
+          });
           //  CreateContentElement ui rendering
-           const onRemove = () => {
-              root?.unmount();
-              shadowContainer.style.visibility="hidden";
-            };
+          const onRemove = () => {
+            root?.unmount();
+            shadowContainer.style.display = "none";
+          };
           root = CreateContentElement(uiContainer, shadowContainer, message, (root) => (
 
-           
-            
-            <PostModal posts={[]}  onRemove={onRemove}/>
+
+
+            <PostModal posts={[]} onRemove={onRemove} />
           ));
         },
         onRemove: () => {

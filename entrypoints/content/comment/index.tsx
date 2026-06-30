@@ -1,13 +1,14 @@
 import React from "react";
 import Header from "../common/header";
-import { IComment } from "../scripts/scrap";
+import { IComment, IPost } from "../scripts/scrap";
 
 interface CommentModal{
+  post?:IPost | null;
   comments: IComment[];
   onRemove: () => void;
 }
 
-export default function CommentModal({ comments, onRemove }: CommentModal) {
+export default function CommentModal({ post, comments, onRemove }: CommentModal) {
   const displayComments = comments || [];
 
   return (
@@ -20,7 +21,19 @@ export default function CommentModal({ comments, onRemove }: CommentModal) {
             display: none; /* Chrome, Safari, Opera */
           }
         `}</style>
-
+{/* NAYA SECTION: if u want to show on which post commnets are */}
+      {/* {post && (
+        <div style={{ 
+          margin: '10px 16px 0 16px', 
+          padding: '12px', 
+          backgroundColor: '#1f2937', 
+          borderRadius: '8px',
+          borderLeft: '4px solid #fbbf24' // Highlight karne ke liye
+        }}>
+          <h2 style={{ fontSize: '16px', margin: '0 0 5px 0', color: '#fbbf24' }}>{post.title}</h2>
+          <p style={{ fontSize: '13px', color: '#d1d5db', margin: 0 }}>{post.description}</p>
+        </div>
+      )} */}
       <Header title="Comments" count={displayComments.length} onRemove={onRemove} />
       
       <div style={{ flex: 1, overflowY: 'auto', padding: '16px', marginTop: '10px' }}>

@@ -27,7 +27,7 @@ export default defineContentScript({
         }, []);
 
         return message === "comment" ? (
-          <CommentModal comments = {comments} formData={formData} onRemove={onRemove} />
+          <CommentModal post={posts[0] || null} comments = {comments} onRemove={onRemove} />
         ) : (
           <PostModal posts={posts} formData={formData} onRemove={onRemove} />
         );

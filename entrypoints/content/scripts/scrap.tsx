@@ -11,9 +11,9 @@ export interface IPost {
 export interface IComment {
     author: string;
     comments: string;
-    link: string;
+    // link: string;
     permalink: string;
-    id: number;
+    id: string;
     score: string;
 }
 
@@ -52,3 +52,36 @@ export function extractRedditPostsFromDOM() {
     });
     return postData;
 }
+
+
+export function extractRedditCommentsFromDOM() {
+    const CommentElements = document.querySelectorAll("shreddit-comment");
+    const comments: IComment[] = [];
+
+    CommentElements.forEach((commentElement, key) => {
+        const author = commentElement.getAttribute("author") || "";
+        const permalink = commentElement.getAttribute("permalink") || "";
+        const thingId = commentElement.getAttribute("thingid");
+        const commentContentDiv = document.getElementById(`${thingId}-post-rtjson-content`)
+
+        const score = commentElement.getAttribute(`score`) || " ";
+
+        if (commentContentDiv) {
+            const commentText = commentContentDiv.innerText || "";
+            comments.push({
+                author,
+                comments: commentText,
+                permalink,
+                id: thingId || key.toString(),
+                score,
+            });
+        } else {
+            console.warn(`Comment content not found for thingId: ${thingId}`)
+        }
+    });
+
+    return comments;
+}
+
+
+

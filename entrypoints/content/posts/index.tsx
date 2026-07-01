@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Header from "../common/header";
 import { IPost } from "../scripts/scrap";
-
+import Search from "../comment/search";
+// import './style.css';
+import "@/entrypoints/popup/style.css";
 interface PostModalProps {
   posts: IPost[];
   formData: any;
@@ -42,6 +44,7 @@ export default function PostModal({ posts, formData, onRemove }: PostModalProps)
         `}</style>
       <div style={{ borderBottom: 'none' }}>
         <Header title="Posts" count={displayPosts.length} onRemove={onRemove} />
+        <Search handleSearch={() => {}}/>
       </div>
 
       {/*  Container */}

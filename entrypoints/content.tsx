@@ -4,7 +4,7 @@ import { CreateContentElement } from "./content/common";
 import PostModal from './content/posts';
 import CommentModal from './content/comment';
 import { useFormData } from "@/entrypoints/hooks/useFormData";
-import './popup/style.css'
+import "@/entrypoints/popup/style.css";
 import { extractRedditCommentsFromDOM, extractRedditPostsFromDOM, IComment, IPost } from './content/scripts/scrap';
 
 export default defineContentScript({

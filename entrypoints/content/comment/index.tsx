@@ -1,7 +1,9 @@
 import React from "react";
 import Header from "../common/header";
 import { IComment, IPost } from "../scripts/scrap";
-
+import Search from "../comment/search";
+// import './style.css'
+import "@/entrypoints/popup/style.css";
 interface CommentModal{
   post?:IPost | null;
   comments: IComment[];
@@ -43,7 +45,7 @@ export default function CommentModal({ post, comments, onRemove }: CommentModal)
         </div>
       )} */}
       <Header title="Comments" count={displayComments.length} onRemove={onRemove} />
-      
+        <Search handleSearch={() => {}}/>
       <div style={{ flex: 1, overflowY: 'auto', padding: '16px', marginTop: '10px' }}>
         {displayComments.length > 0 ? (
           displayComments.map((c) => (

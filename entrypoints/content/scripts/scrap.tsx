@@ -84,4 +84,26 @@ export function extractRedditCommentsFromDOM() {
 }
 
 
+export function extractJsonListFromMarkDown(markdownText: string){
 
+const jsonRegex = /```(?:json|javascript)?\n({[s\S]*?)\n```|`({[\s\S]*?})`/g ;
+const jsonLists = [];
+let match;
+while((match = jsonRegex.exec(markdownText)) !== null){
+ try{
+ const jsonStrinig = match[1] || match[2];
+if(jsonStrinig){
+    const parseJson = JSON.parse(jsonStrinig);
+    if(Array.isArray(parseJson)){
+        jsonLists.push(parseJson)
+    }
+}
+
+
+}catch(error){
+    console.error("Error parsing JSON :", error);
+}
+
+}
+return jsonLists[0] || [];
+}

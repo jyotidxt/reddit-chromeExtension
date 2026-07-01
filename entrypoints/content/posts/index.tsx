@@ -1,23 +1,79 @@
 import React, { useState } from "react";
 import Header from "../common/header";
-import { IPost } from "../scripts/scrap";
+import { extractJsonListFromMarkDown, IPost } from "../scripts/scrap";
 import Search from "../comment/search";
-// import './style.css';
 import "@/entrypoints/popup/style.css";
+import { useFormData } from "@/entrypoints/hooks/useFormData";
+import  axios  from "axios";
+import "@/entrypoints/content/script.t/scrap.tsk"
+import { customToast } from "../common/customToat";
+// import CustomToast from "@/entrypoints"
+
+
 interface PostModalProps {
   posts: IPost[];
   formData: any;
   onRemove: () => void;
 }
 
-export default function PostModal({ posts, formData, onRemove }: PostModalProps) {
+export default function PostModal({ posts, onRemove }: PostModalProps) {
   const displayPosts = posts || [];
+
+  const {formData} = useFormData()
+const [loading, setLoading] = useState(false)
+const [geminiResponse, setGeminiResponse] = useState<IPost[]>([]);
 
   const handlePostClick = (post: IPost) => {
     if (post.link) {
       window.open(post.link, "_blank", "noopener,noreferrer");
     }
   };
+
+  const handleSearch = async (searchQuery: string) => {
+    setLoading(true);
+    setGeminiResponse([]);
+const url =`${formData?.endpoint}?key=${formData?.apiKey}`;
+
+const payLoad = {
+  contents: [
+    {
+      parts: [
+        {
+          text:`This is the prompt: ${searchQuery}
+          This is the dataset od posts in js array: '''${JSON.stringify (posts)}''' 
+
+          Now based on this post dataset and the prompt,
+          give me all the related posts match matched with what prompt asked.
+           Use, description, title, tag, score, comments, for matching most relevant post. Give me the list of posts with the same format as I have given you.
+          Don't give me an extra text even if you failed to find any post.
+          Just give me empty array if not match found. And if found give me the list of posts with the same data format.`,
+        },
+      ],
+    },
+  ],
+};
+
+try {
+  const response = await axios.post(url, payLoad, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = response.data?.candidates?.[0]?.content?.parts?.[0]?.text; 
+  const extractData = extractJsonListFromMarkDown(
+  data as string ) as IPost[];
+  console.info(extractData);
+  setGeminiResponse(extractData);
+}catch (error) {
+  customToast({
+    message: "API error gnerating response",
+    status: "error",
+  });
+  setGeminiResponse([]);
+}finally {
+  setLoading(false);
+}
+  }
   return (
     <div style={{
       width: '90%',
@@ -44,7 +100,10 @@ export default function PostModal({ posts, formData, onRemove }: PostModalProps)
         `}</style>
       <div style={{ borderBottom: 'none' }}>
         <Header title="Posts" count={displayPosts.length} onRemove={onRemove} />
-        <Search handleSearch={() => {}}/>
+        <Search handleSearch={() => {handleSearch}}/>
+          {loading && (
+          <p className="text-center text-white text-2xl">Loading...</p>
+          )}
       </div>
 
       {/*  Container */}

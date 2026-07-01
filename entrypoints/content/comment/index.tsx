@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../common/header";
 import { IComment, IPost } from "../scripts/scrap";
 import Search from "../comment/search";
+
 // import './style.css'
 import "@/entrypoints/popup/style.css";
 interface CommentModal{

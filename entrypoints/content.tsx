@@ -5,7 +5,7 @@ import PostModal from './content/posts';
 import CommentModal from './content/comment';
 import { useFormData } from "@/entrypoints/hooks/useFormData";
 import "@/entrypoints/popup/style.css";
-import { extractRedditCommentsFromDOM, extractRedditPostsFromDOM, IComment, IPost } from './content/scripts/scrap';
+import { extractRedditCommentsFromDOM, extractRedditPostsFromDOM,extractJsonListFromMarkDown, IComment, IPost } from './content/scripts/scrap';
 
 export default defineContentScript({
   matches: ['*://*.reddit.com/*'],
